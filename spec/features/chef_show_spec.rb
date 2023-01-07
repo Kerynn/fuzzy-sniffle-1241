@@ -61,19 +61,21 @@ RSpec.describe 'Chef Show Page' do
       DishIngredient.create!(dish_id: mac.id, ingredient_id: noodles.id)
       DishIngredient.create!(dish_id: mac.id, ingredient_id: pepper.id)
 
-      cheddar = Ingredient.create!(name: "Cheddar", calories: 20)
       patty = Ingredient.create!(name: "Burger Patty", calories: 80)
       
       DishIngredient.create!(dish_id: burger.id, ingredient_id: cheddar.id)
       DishIngredient.create!(dish_id: burger.id, ingredient_id: patty.id)
 
       visit chef_path(anthony)
-
+save_and_open_page
       click_link "View all Ingredients for this Chef"
-
+save_and_open_page
       expect(current_path).to eq "/chefs/#{anthony.id}/ingredients" 
 
-
+      expect(page).to have_content(cheddar.name, count: 1)
+      expect(page).to have_content(noodles.name, count: 1)
+      expect(page).to have_content(pepper.name, count: 1)
+      expect(page).to have_content(patty.name, count: 1)
     end
   end
 end
