@@ -16,7 +16,7 @@ RSpec.describe 'Chef Show Page' do
       expect(page).to have_content(fried_chicken.name)
     end
 
-    xit 'has a form to add a dish to that chef' do 
+    it 'has a form to add a dish to that chef' do 
       anthony = Chef.create!(name: "Anthony B")
       mac = anthony.dishes.create!(name: "Mac N Cheese", description: "The best and cheesiest")
       burger = anthony.dishes.create!(name: "Big Ol Burger", description: "It's big!")
@@ -26,7 +26,7 @@ RSpec.describe 'Chef Show Page' do
       ceasar = jim.dishes.create!(name: "Ceasar Salad", description: "You will love the dressing")
       
       visit chef_path(anthony)
-      
+      save_and_open_page
       expect(page).to_not have_content(ceasar.name)
 
       fill_in :dish_id, with: ceasar.id 
@@ -67,9 +67,9 @@ RSpec.describe 'Chef Show Page' do
       DishIngredient.create!(dish_id: burger.id, ingredient_id: patty.id)
 
       visit chef_path(anthony)
-save_and_open_page
+
       click_link "View all Ingredients for this Chef"
-save_and_open_page
+
       expect(current_path).to eq "/chefs/#{anthony.id}/ingredients" 
 
       expect(page).to have_content(cheddar.name, count: 1)

@@ -4,7 +4,7 @@
   <li><%= dish.name %>
 <% end %>
 
-<%= form_with url: "/chefs/#{@chef.id}/dishes", method: :post, local: true do |form| %>
+<%= form_with url: "/chefs/#{@chef.id}/dishes/edit", method: :patch, local: true do |form| %>
   <%= form.label :dish_id %>
   <%= form.text_field :dish_id %> 
 
