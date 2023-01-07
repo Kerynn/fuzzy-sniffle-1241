@@ -26,7 +26,7 @@ RSpec.describe 'Chef Show Page' do
       ceasar = jim.dishes.create!(name: "Ceasar Salad", description: "You will love the dressing")
       
       visit chef_path(anthony)
-      save_and_open_page
+      
       expect(page).to_not have_content(ceasar.name)
 
       fill_in :dish_id, with: ceasar.id 
