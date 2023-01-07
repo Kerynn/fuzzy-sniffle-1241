@@ -43,10 +43,23 @@ RSpec.describe 'Dish Show Page' do
 
       visit dish_path(mac)
 
+      expect(page).to have_content("Total Calorie Count: 170")
     end
 
-    xit 'shows the chef name' do 
+    it 'shows the chef name' do 
+      anthony = Chef.create!(name: "Anthony B")
+      mac = anthony.dishes.create!(name: "Mac N Cheese", description: "The best and cheesiest")
+      cheddar = Ingredient.create!(name: "Cheddar", calories: 20)
+      noodles = Ingredient.create!(name: "Noodles", calories: 50)
+      pepper = Ingredient.create!(name: "Pepper Jack Cheese", calories: 100)
 
+      DishIngredient.create!(dish_id: mac.id, ingredient_id: cheddar.id)
+      DishIngredient.create!(dish_id: mac.id, ingredient_id: noodles.id)
+      DishIngredient.create!(dish_id: mac.id, ingredient_id: pepper.id)
+
+      visit dish_path(mac)
+
+      expect(page).to have_content("Chef: #{anthony.name}")
     end
   end
 end
